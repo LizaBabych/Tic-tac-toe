@@ -139,7 +139,11 @@ const App = () => {
               id={cell.id}
               key={cell.id}
               className="card"
-              onClick={() => userMove(cell)}
+              onClick={() => {
+                if (!cell.state) {
+                  userMove(cell);
+                }
+              }}
             >
               {cell.state && (
                 <div className={cell.state === "cross" ? "cross" : "close"} />
