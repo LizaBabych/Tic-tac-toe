@@ -79,9 +79,7 @@ const App = () => {
     );
   };
 
-  const checkWin = (cellState: cellState): string | boolean => {
-    const isDraw = cellsState.every((item) => item.state);
-    if (isDraw) return "draw";
+  const checkWin = (cellState: cellState): boolean => {
     return directions
       .map((dir) => {
         return checkWinDirection(dir[0], dir[1], dir[2], cellState);
@@ -100,8 +98,11 @@ const App = () => {
     }
     setCellsState(cellsCopy);
     const winn = checkWin("cross");
-    if (winn === true) {
+    const isDraw = cellsState.every((item) => item.state);
+    if (winn) {
       setGameEnd("lose");
+    } else if (!winn && isDraw) {
+      setGameEnd("draw");
     }
   };
 
@@ -115,9 +116,10 @@ const App = () => {
     });
     setCellsState(cellsCopy);
     const winn = checkWin(cell.state);
-    if (winn === true) {
+    const isDraw = cellsState.every((item) => item.state);
+    if (winn) {
       setGameEnd("win");
-    } else if (winn === "draw") {
+    } else if (!winn && isDraw) {
       setGameEnd("draw");
     } else {
       botMove();
